@@ -14,17 +14,29 @@ public class MineFieldView extends View {
         panel.setController(controller);
         add(panel);
 
-        addMenu("&Movement", new String[]{"&North", "&South", "&East", "&West"});
+        // Add all directions to the menu, including diagonals
+        addMenu("&Movement", new String[]{
+                "&North",
+                "&South",
+                "&East",
+                "&West",
+                "North&East",
+                "North&West",
+                "South&East",
+                "South&West"
+        });
 
         setTitle("Mine Field");
         setSize(600, 400);
         setVisible(true);
     }
 
+    @Override
     public void update(Observable subject, Object message) {
         repaint();
     }
 
+    @Override
     public void setModel(Model newModel) {
         super.setModel(newModel);
         panel.setModel(newModel);

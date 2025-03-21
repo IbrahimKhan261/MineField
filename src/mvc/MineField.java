@@ -19,8 +19,10 @@ public class MineField extends Model {
     private PropertyChangeSupport pcs;
 
     public enum Heading {
-        NORTH, SOUTH, EAST, WEST
+        NORTH, SOUTH, EAST, WEST,
+        NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
     }
+
 
     public MineField() {
         mines = new boolean[GRID_SIZE][GRID_SIZE];
@@ -85,6 +87,22 @@ public class MineField extends Model {
                 newCol++;
                 break;
             case WEST:
+                newCol--;
+                break;
+            case NORTHEAST:
+                newRow--;
+                newCol++;
+                break;
+            case NORTHWEST:
+                newRow--;
+                newCol--;
+                break;
+            case SOUTHEAST:
+                newRow++;
+                newCol++;
+                break;
+            case SOUTHWEST:
+                newRow++;
                 newCol--;
                 break;
         }

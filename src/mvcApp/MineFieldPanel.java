@@ -38,63 +38,48 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         statusPanel.add(statusLabel);
         add(statusPanel, BorderLayout.SOUTH);
 
-        // Control panel
+        // Control panel with diagonal buttons
         JPanel controlPanel = new JPanel(new GridLayout(3, 3));
-        controlPanel.add(new JLabel("")); // Empty
-        JButton northButton = new JButton("North");
-        northButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    model.move(MineField.Heading.NORTH);
-                } catch (Exception ex) {
-                    mvc.Utilities.inform(ex.getMessage());
-                }
-            }
-        });
+
+        // Create all direction buttons
+        JButton nwButton = createDirectionButton("NW", MineField.Heading.NORTHWEST);
+        JButton northButton = createDirectionButton("North", MineField.Heading.NORTH);
+        JButton neButton = createDirectionButton("NE", MineField.Heading.NORTHEAST);
+        JButton westButton = createDirectionButton("West", MineField.Heading.WEST);
+        JButton centerLabel = new JButton();
+        JButton eastButton = createDirectionButton("East", MineField.Heading.EAST);
+        JButton swButton = createDirectionButton("SW", MineField.Heading.SOUTHWEST);
+        JButton southButton = createDirectionButton("South", MineField.Heading.SOUTH);
+        JButton seButton = createDirectionButton("SE", MineField.Heading.SOUTHEAST);
+
+        // Add buttons to the control panel grid
+        controlPanel.add(nwButton);
         controlPanel.add(northButton);
-        controlPanel.add(new JLabel("")); // Empty
-
-        JButton westButton = new JButton("West");
-        westButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    model.move(MineField.Heading.WEST);
-                } catch (Exception ex) {
-                    mvc.Utilities.inform(ex.getMessage());
-                }
-            }
-        });
+        controlPanel.add(neButton);
         controlPanel.add(westButton);
-        controlPanel.add(new JLabel("")); // Empty
-        JButton eastButton = new JButton("East");
-        eastButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    model.move(MineField.Heading.EAST);
-                } catch (Exception ex) {
-                    mvc.Utilities.inform(ex.getMessage());
-                }
-            }
-        });
+        controlPanel.add(centerLabel);
         controlPanel.add(eastButton);
-
-        controlPanel.add(new JLabel("")); // Empty
-        JButton southButton = new JButton("South");
-        southButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    model.move(MineField.Heading.SOUTH);
-                } catch (Exception ex) {
-                    mvc.Utilities.inform(ex.getMessage());
-                }
-            }
-        });
+        controlPanel.add(swButton);
         controlPanel.add(southButton);
-        controlPanel.add(new JLabel("")); // Empty
+        controlPanel.add(seButton);
 
         add(controlPanel, BorderLayout.EAST);
 
         updateView();
+    }
+
+    private JButton createDirectionButton(String label, MineField.Heading heading) {
+        JButton button = new JButton(label);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    model.move(heading);
+                } catch (Exception ex) {
+                    mvc.Utilities.inform(ex.getMessage());
+                }
+            }
+        });
+        return button;
     }
 
     private void updateView() {
@@ -131,8 +116,6 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         }
 
         public void update() {
-            // No colored background squares as requested
-
             // Clear previous content
             label.setText("");
 

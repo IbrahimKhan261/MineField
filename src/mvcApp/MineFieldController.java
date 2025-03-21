@@ -25,6 +25,18 @@ public class MineFieldController extends Controller {
             case "West":
                 heading = MineField.Heading.WEST;
                 break;
+            case "NorthEast":
+                heading = MineField.Heading.NORTHEAST;
+                break;
+            case "NorthWest":
+                heading = MineField.Heading.NORTHWEST;
+                break;
+            case "SouthEast":
+                heading = MineField.Heading.SOUTHEAST;
+                break;
+            case "SouthWest":
+                heading = MineField.Heading.SOUTHWEST;
+                break;
             default:
                 throw new Exception("Unknown command: " + commandName);
         }
