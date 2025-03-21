@@ -8,7 +8,7 @@ import java.util.Random;
 public class MineField extends Model {
     private static final long serialVersionUID = 1L;
     public static int percentMined = 5;
-    private static final int GRID_SIZE = 10;
+    private static final int GRID_SIZE = 20; // Changed from 10 to 20
 
     private boolean[][] mines;
     private boolean[][] visited;

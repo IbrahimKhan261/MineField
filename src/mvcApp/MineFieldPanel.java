@@ -19,6 +19,7 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
 
         setLayout(new BorderLayout());
 
+        // Grid panel
         JPanel gridPanel = new JPanel(new GridLayout(model.getGridSize(), model.getGridSize()));
         cells = new Cell[model.getGridSize()][model.getGridSize()];
 
@@ -31,11 +32,13 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
 
         add(gridPanel, BorderLayout.CENTER);
 
+        // Status panel
         JPanel statusPanel = new JPanel();
         statusLabel = new JLabel("Mine detector: 0 adjacent mines");
         statusPanel.add(statusLabel);
         add(statusPanel, BorderLayout.SOUTH);
 
+        // Control panel
         JPanel controlPanel = new JPanel(new GridLayout(3, 3));
         controlPanel.add(new JLabel("")); // Empty
         JButton northButton = new JButton("North");
@@ -105,6 +108,7 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         statusLabel.setText("Mine detector: " + adjacentMines + " adjacent mines");
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         updateView();
     }
@@ -113,32 +117,39 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         private static final long serialVersionUID = 1L;
         private int row;
         private int col;
+        private JLabel label;
 
         public Cell(int row, int col) {
             this.row = row;
             this.col = col;
-            setPreferredSize(new Dimension(30, 30));
-            setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            setPreferredSize(new Dimension(25, 25)); // Smaller cells for 20x20 grid
+            setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            setLayout(new BorderLayout());
+            label = new JLabel("", JLabel.CENTER);
+            add(label, BorderLayout.CENTER);
             update();
         }
 
         public void update() {
-            if (model.isGoal(row, col)) {
-                setBackground(Color.GREEN);
-            } else if (model.getPlayerRow() == row && model.getPlayerCol() == col) {
-                setBackground(Color.YELLOW);
-                if (model.isVisited(row, col)) {
-                    setLayout(new BorderLayout());
-                    removeAll();
-                    add(new JLabel(String.valueOf(model.getAdjacentMines(row, col)), JLabel.CENTER));
+            // No colored background squares as requested
+
+            // Clear previous content
+            label.setText("");
+
+            // Show adjacent mine count for visited cells
+            if (model.isVisited(row, col)) {
+                if (model.getPlayerRow() == row && model.getPlayerCol() == col) {
+                    label.setText("X"); // Mark player position with X
+                } else {
+                    label.setText(String.valueOf(model.getAdjacentMines(row, col)));
                 }
-            } else if (model.isVisited(row, col)) {
-                setBackground(Color.WHITE);
-                setLayout(new BorderLayout());
-                removeAll();
-                add(new JLabel(String.valueOf(model.getAdjacentMines(row, col)), JLabel.CENTER));
+            }
+
+            // Mark goal (can be subtle)
+            if (model.isGoal(row, col)) {
+                setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
             } else {
-                setBackground(Color.LIGHT_GRAY);
+                setBorder(BorderFactory.createLineBorder(Color.GRAY));
             }
 
             revalidate();
@@ -146,6 +157,7 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         }
     }
 
+    @Override
     public void setModel(Model newModel) {
         super.setModel(newModel);
         this.model = (MineField) newModel;

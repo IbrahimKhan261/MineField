@@ -12,8 +12,8 @@ public class AppPanel extends JPanel implements PropertyChangeListener, ActionLi
 	protected AppFactory factory;
 	protected Set<View> views;
 	private JFrame frame;
-	public static int FRAME_WIDTH = 500;
-	public static int FRAME_HEIGHT = 300;
+	public static int FRAME_WIDTH = 700; // Increased from 500 to 700
+	public static int FRAME_HEIGHT = 700; // Increased from 300 to 700
 
 	public AppPanel(AppFactory factory) {
 		super();
@@ -33,6 +33,7 @@ public class AppPanel extends JPanel implements PropertyChangeListener, ActionLi
 
 	public void addView(View view) { views.add(view); }
 
+	@Override
 	public Component add(Component c) {
 		if ( c instanceof View ) addView((View)c);
 		return super.add(c);
@@ -40,6 +41,7 @@ public class AppPanel extends JPanel implements PropertyChangeListener, ActionLi
 
 	public void display() { frame.setVisible(true); }
 
+	//
 	public void propertyChange(PropertyChangeEvent evt) {
 	}
 
@@ -56,15 +58,15 @@ public class AppPanel extends JPanel implements PropertyChangeListener, ActionLi
 	protected JMenuBar createMenuBar() {
 		JMenuBar result = new JMenuBar();
 		JMenu fileMenu =
-			Utilities.makeMenu("File", new String[] {"New",  "Save", "SaveAs", "Open", "Quit"}, this);
+				Utilities.makeMenu("File", new String[] {"New",  "Save", "SaveAs", "Open", "Quit"}, this);
 		result.add(fileMenu);
 
 		JMenu editMenu =
-		    Utilities.makeMenu("Edit", factory.getEditCommands(), this);
+				Utilities.makeMenu("Edit", factory.getEditCommands(), this);
 		result.add(editMenu);
 
 		JMenu helpMenu =
-		    Utilities.makeMenu("Help", new String[] {"About", "Help"}, this);
+				Utilities.makeMenu("Help", new String[] {"About", "Help"}, this);
 		result.add(helpMenu);
 
 		return result;
