@@ -19,7 +19,6 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
 
         setLayout(new BorderLayout());
 
-        // Grid panel
         JPanel gridPanel = new JPanel(new GridLayout(model.getGridSize(), model.getGridSize()));
         cells = new Cell[model.getGridSize()][model.getGridSize()];
 
@@ -38,10 +37,8 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         statusPanel.add(statusLabel);
         add(statusPanel, BorderLayout.SOUTH);
 
-        // Control panel with diagonal buttons
         JPanel controlPanel = new JPanel(new GridLayout(3, 3));
 
-        // Create all direction buttons
         JButton nwButton = createDirectionButton("NW", MineField.Heading.NORTHWEST);
         JButton northButton = createDirectionButton("North", MineField.Heading.NORTH);
         JButton neButton = createDirectionButton("NE", MineField.Heading.NORTHEAST);
@@ -52,7 +49,6 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         JButton southButton = createDirectionButton("South", MineField.Heading.SOUTH);
         JButton seButton = createDirectionButton("SE", MineField.Heading.SOUTHEAST);
 
-        // Add buttons to the control panel grid
         controlPanel.add(nwButton);
         controlPanel.add(northButton);
         controlPanel.add(neButton);
@@ -116,10 +112,7 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
         }
 
         public void update() {
-            // Clear previous content
             label.setText("");
-
-            // Show adjacent mine count for visited cells
             if (model.isVisited(row, col)) {
                 if (model.getPlayerRow() == row && model.getPlayerCol() == col) {
                     label.setText("X"); // Mark player position with X
@@ -127,8 +120,6 @@ public class MineFieldPanel extends ViewPanel implements PropertyChangeListener 
                     label.setText(String.valueOf(model.getAdjacentMines(row, col)));
                 }
             }
-
-            // Mark goal (can be subtle)
             if (model.isGoal(row, col)) {
                 setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
             } else {

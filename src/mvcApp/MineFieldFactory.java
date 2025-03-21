@@ -3,23 +3,18 @@ package mvcApp;
 import mvc.*;
 
 public class MineFieldFactory implements AppFactory {
-    @Override
     public Model makeModel() {
         return new MineField();
     }
 
-    @Override
     public View makeView(Model model, Controller controller, ViewPanel panel) {
         return new MineFieldView(model, controller, panel);
     }
 
-    @Override
     public String[] getEditCommands() {
-        // Include diagonal directions in the Edit menu
         return new String[]{"North", "South", "East", "West", "NorthEast", "NorthWest", "SouthEast", "SouthWest"};
     }
 
-    @Override
     public Command makeEditCommand(Model model, String type) {
         MineField.Heading heading;
 
@@ -55,12 +50,10 @@ public class MineFieldFactory implements AppFactory {
         return new MoveCommand(model, heading);
     }
 
-    @Override
     public String getTitle() {
         return "Mine Field";
     }
 
-    @Override
     public String[] getHelp() {
         return new String[]{
                 "North: Move up",
@@ -77,7 +70,6 @@ public class MineFieldFactory implements AppFactory {
         };
     }
 
-    @Override
     public String about() {
         return "Mine Field: Avoid mines and reach the goal.";
     }
