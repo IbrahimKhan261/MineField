@@ -1,8 +1,5 @@
 package mvc;
 
-/**
- * Interface for application factories in the MVC framework.
- */
 public interface AppFactory {
     Model makeModel();
 
